@@ -6,9 +6,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
-
-import javax.naming.event.NamingListener;
 import java.time.Duration;
 import java.util.List;
 
@@ -19,21 +16,17 @@ public class NationalityPage extends PageBase {
     private final String nationTextBox=".oxd-input.oxd-input--active";
     private final String textNation="//div[@class='oxd-input-group oxd-input-field-bottom-space']//div[2]//input";
     private final String alreadyExistsMsg="//div[@class='oxd-form-row'] /div";
-    private final String cancelButton="oxd-button oxd-button--medium oxd-button--ghost";
+    private final String cancelButton="//button[@class='oxd-button oxd-button--medium oxd-button--ghost']";
     private final String nationSaveBtn="//button[@type='submit']";
     private final String nationListTable=".oxd-table-body";
-    private final String nationEditBtn="//button[@class='oxd-icon-button oxd-table-cell-action-space']//following-sibling::button";
-    private final String nationDeleteBtn="//button[@class='oxd-icon-button oxd-table-cell-action-space'][1]";
-    private final String deleteNationBtn="//div/div[3]/div/button[1]";
+    private final String nationEditBtn=".//div/div[3]/div/button[2]";
+    private final String deleteNationBtn=".//div/div[3]/div/button[1]";
     private final String nationalities = "//div[@class='oxd-table-body'] /div[@class='oxd-table-card']";
     private final String deletePopupBtn="//div[@class='orangehrm-modal-footer']/button[2]";
-    private final String nationCheckBox="//div[@class='oxd-table-card-cell-checkbox']//i";
-    private final String deleteSelctedBtn="//div[@class='orangehrm-horizontal-padding orangehrm-vertical-padding']//button";
-    private final String nationName="//div[@class='oxd-table-row oxd-table-row--with-border']/div[@class='oxd-table-cell oxd-padding-cell'][2]/div";
+    private final String nationCheckBox=".//div[@class='oxd-table-card-cell-checkbox']//i";
+    private final String deleteSelectedBtn="//div[@class='orangehrm-horizontal-padding orangehrm-vertical-padding']//button";
+    private final String nationName=".//div[@class='oxd-table-row oxd-table-row--with-border']/div[@class='oxd-table-cell oxd-padding-cell'][2]/div";
 
-    private final String nList="//div[@class='oxd-table-row oxd-table-row--with-border']";
-    @FindBy(xpath = nList)
-    private List<WebElement> listN;
     @FindBy(xpath = nationalities)
     private List<WebElement> nationList;
 
@@ -48,19 +41,23 @@ public class NationalityPage extends PageBase {
         try {
             click(By.cssSelector(addNationBtn));
             setText(By.cssSelector(nationTextBox), nationalityName);
+            sleep(2000);
             if (getText(By.xpath(alreadyExistsMsg)).contains("Already exists")) {
+                sleep(2000);
                 click(By.xpath(cancelButton));
+                System.out.println("cancel pressed");
             } else {
                 click(By.xpath(nationSaveBtn));
+                System.out.println("save pressed");
             }
-            System.out.println("save pressed");
+
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Wait up to 10 seconds
             wait.until(ExpectedConditions.visibilityOfAllElements(nationList));
             System.out.println(nationList);
             isElementVisible(By.cssSelector(nationListTable));
             return nationList.stream().map(s -> s.getText()).anyMatch(s -> s.equalsIgnoreCase(nationalityName));
         } catch (Exception e) {
-            System.out.println("exception occuered :"+e.getMessage());
+            System.out.println("exception occurred :"+e.getMessage());
         }
         return false;
     }
@@ -72,10 +69,10 @@ public class NationalityPage extends PageBase {
             click(By.cssSelector(addNationBtn));
             setText(By.cssSelector(nationTextBox), nationalityName);
             sleep(3000);
-            System.out.println("msgstart:"+getText(By.xpath(alreadyExistsMsg))+":msgend");
+            System.out.println("msg:"+getText(By.xpath(alreadyExistsMsg)));
             return (getText(By.xpath(alreadyExistsMsg))).trim().equalsIgnoreCase("Name\nAlready exists");
         } catch (Exception e) {
-            System.out.println("Exception occured:"+e.getMessage());
+            System.out.println("Exception occurred:"+e.getMessage());
         }
         return false;
     }
@@ -84,36 +81,39 @@ public class NationalityPage extends PageBase {
     ////////////
 
 
-    public Boolean editNationality(String nationalityName) {
+    public Boolean editNationality(String nationalityNameOld,String nationalityNameNew) {
 
         try {
+            if(saveNewNationality("A")){
 
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Wait up to 10 seconds
-            wait.until(ExpectedConditions.visibilityOfAllElements(nationList));
-            System.out.println("nationList:" + nationList.size());
-            isElementVisible(By.cssSelector(nationListTable));
+                WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Wait up to 10 seconds
+                wait.until(ExpectedConditions.visibilityOfAllElements(nationList));
+                System.out.println("nationList:" + nationList.size());
+                isElementVisible(By.cssSelector(nationListTable));
 
-            for (WebElement nation : nationList) {
+                for (WebElement nation : nationList) {
 
-                if (nationalityName.equalsIgnoreCase(nation.getText())) {
-                    System.out.println("name matched");
-                    List<WebElement> nationElements = nation.findElements(By.xpath(nationEditBtn));
-                    System.out.println("nationElements count"+nationElements.size());
+                    WebElement nameNation = nation.findElement(By.xpath(nationName));
+                    isElementVisible(By.xpath(nationName));
 
-                    for (WebElement editBtn : nationElements) {
+                    if (nationalityNameOld.equalsIgnoreCase(nameNation.getText())) {
+                        System.out.println("name matched");
+                        WebElement editBtn = nation.findElement(By.xpath(nationEditBtn));
+
                         isElementVisible(By.xpath(nationEditBtn));
-                        if (isElementClickable(By.xpath(nationEditBtn))){
+                        if (isElementClickable(By.xpath(nationEditBtn))) {
                             editBtn.click();
                             isElementVisible(By.xpath(textNation));
-                            WebElement we =driver.findElement(By.xpath(textNation));
-                            System.out.println("Before clearing: " + we.getAttribute("value"));
-                            while(!we.getAttribute("value").equals("")){
-                                System.out.println("inside while");
-                                we.sendKeys(Keys.BACK_SPACE);
+                            sleep(2000);
+                            WebElement textboxWe = driver.findElement(By.xpath(textNation));
+                            System.out.println("Before clearing:" + textboxWe.getAttribute("value"));
+                            while (!textboxWe.getAttribute("value").equals("")) {
+                                textboxWe.clear();
+                                textboxWe.sendKeys(Keys.BACK_SPACE);
                             }
-                            System.out.println("After clearing:"+we.getAttribute("value"));
-                            we.sendKeys("A1");
-                            System.out.println("after update: " + we.getAttribute("value"));
+                            System.out.println("After clearing:" + textboxWe.getAttribute("value"));
+                            textboxWe.sendKeys(nationalityNameNew);
+                            System.out.println("after update: " + textboxWe.getAttribute("value"));
                             if (getText(By.xpath(alreadyExistsMsg)).contains("Already exists")) {
                                 click(By.xpath(cancelButton));
                             } else {
@@ -121,27 +121,28 @@ public class NationalityPage extends PageBase {
                             }
 
                             isElementVisible(By.xpath(nationalities));
-                            nationList=driver.findElements(By.xpath(nationalities));
+                            nationList = driver.findElements(By.xpath(nationalities));
                             WebDriverWait nationWait = new WebDriverWait(driver, Duration.ofSeconds(10));
                             nationWait.until(ExpectedConditions.visibilityOfAllElements(nationList));
                             System.out.println(nationList.size());
-                            Boolean match = nationList.stream().map(s -> s.getText()).anyMatch(s -> s.equalsIgnoreCase("A1"));
-                            return match;
+                            return nationList.stream().map(s -> s.getText()).anyMatch(s -> s.equalsIgnoreCase(nationalityNameNew));
+
 
                         }
                     }
-                }
 
+
+                }
 
             }
         }catch(StaleElementReferenceException e){
-            System.out.println("exeception occured");
+            System.out.println("exception occurred");
            // e.printStackTrace();
         }
         return false;
     }
 
-    //Issue- Always the first record gets deleted.
+
     public Boolean deleteNationality(String nationalityName) {
 
         try {
@@ -150,19 +151,15 @@ public class NationalityPage extends PageBase {
 
                 WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Wait up to 10 seconds
                 wait.until(ExpectedConditions.visibilityOfAllElements(nationList));
-                System.out.println("nationList:" + nationList.size());
                 isElementVisible(By.cssSelector(nationListTable));
 
                 for (WebElement nation : nationList) {
                     WebElement nameNation = nation.findElement(By.xpath(nationName));
                     isElementVisible(By.xpath(nationName));
-                    System.out.println("nation WE:" + nation.getText());
-                    System.out.println("nationName from Xpath:" + nameNation.getText());
-                    if (nationalityName.equalsIgnoreCase(nation.getText())) {
+                    if (nationalityName.equalsIgnoreCase(nameNation.getText())) {
                         System.out.println(nation.getText());
-                        System.out.println("name matched");
+                        System.out.println("name matched"+nameNation.getText());
                         WebElement deleteBtn = nation.findElement(By.xpath(deleteNationBtn));
-                        //System.out.println("nationElements :"+nationElements.size());
                         isElementVisible(By.xpath(deleteNationBtn));
                         isElementClickable(By.xpath(deleteNationBtn));
                         deleteBtn.click();
@@ -183,7 +180,7 @@ public class NationalityPage extends PageBase {
 
             }
         }catch(Exception e){
-            System.out.println("exeception occured :"+e.getMessage());
+            System.out.println("exception occurred :"+e.getMessage());
             // e.printStackTrace();
         }
         return true;
@@ -195,40 +192,29 @@ public class NationalityPage extends PageBase {
             if(saveNewNationality("A")&&saveNewNationality("AA")) {
                 System.out.println("inside if");
                 WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Wait up to 10 seconds
-                wait.until(ExpectedConditions.visibilityOfAllElements(listN));
-                System.out.println("nationList:" + listN.size());
+                wait.until(ExpectedConditions.visibilityOfAllElements(nationList));
+                System.out.println("nationList:" + nationList.size());
                 isElementVisible(By.cssSelector(nationListTable));
 
 
-                for (WebElement Nation : listN) {
-                    System.out.println("Nation size"+Nation.getSize());
-                    System.out.println(Nation.getText());
-                    if (nationalityName1.equalsIgnoreCase(Nation.getText()) || nationalityName2.equalsIgnoreCase(Nation.getText())) {
-                        System.out.println("name matched" + Nation.getText());
-                        List<WebElement> nationElements = Nation.findElements(By.xpath(nationCheckBox));
-                        System.out.println("nationCBElements " + nationElements.size());
-                        for (WebElement checkBox : nationElements) {
-                            System.out.println("inside for:");
-                            isElementVisible(By.xpath(nationCheckBox));
-                            System.out.println(checkBox.getText());
-                            System.out.println(checkBox.getTagName());
-                            System.out.println(checkBox.getAttribute("class"));
-                            isElementClickable(By.xpath(nationCheckBox));
-                            checkBox.click();
-                            System.out.println("checkbox selected:breaking");
-                            break;
+                for (WebElement nation : nationList) {
 
-                        }
+                    if (nationalityName1.equalsIgnoreCase(nation.getText()) || nationalityName2.equalsIgnoreCase(nation.getText())) {
+                        System.out.println("name matched" + nation.getText());
+                        WebElement checkBox = nation.findElement(By.xpath(nationCheckBox));
+                        isElementVisible(By.xpath(nationCheckBox));
+                        isElementClickable(By.xpath(nationCheckBox));
+                        checkBox.click();
                     }
                 }
-                if (isElementVisible(By.xpath(deleteSelctedBtn))) {
+                if (isElementVisible(By.xpath(deleteSelectedBtn))) {
                     System.out.println("inside popup");
-                    isElementClickable(By.xpath(deleteSelctedBtn));
-                    click(By.xpath(deleteSelctedBtn));
+                    isElementClickable(By.xpath(deleteSelectedBtn));
+                    click(By.xpath(deleteSelectedBtn));
                     sleep(2000);
                     isElementVisible(By.xpath(deletePopupBtn));
                     isElementClickable(By.xpath(deletePopupBtn));
-//                    click(By.xpath(deletePopupBtn));
+                    click(By.xpath(deletePopupBtn));
                     isElementVisible(By.xpath(nationalities));
                     nationList = driver.findElements(By.xpath(nationalities));
                     WebDriverWait nationWait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Wait up to 10 seconds
@@ -241,7 +227,7 @@ public class NationalityPage extends PageBase {
                 }
             }else return false;
         }catch(Exception e){
-                System.out.println("exeception occured");
+                System.out.println("exception occurred");
                 // e.printStackTrace();
         }
         return false;

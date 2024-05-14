@@ -1,15 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
-    <test verbose="2" preserve-order="true" name="D:/Trainingsessions/Java/Batch35/Projectpombatch35">
+    <test verbose="2" preserve-order="true" name="C:/Users/nithi/IdeaProjects/ProjectBatch35">
         <classes>
             <class name="tests.EducationTests">
                 <methods>
-                    <include name="addNewEducation"/>
+                    <exclude name="addNewEducation"/>
                 </methods>
             </class>
-
-
+            <class name="tests.LoginTests">
+                <methods>
+                    <exclude name="loginTestWithValidCredentials"/>
+                    <exclude name="loginTestWithInValidCredentials"/>
+                    <exclude name="loginTestWithSpaces"/>
+                </methods>
+            </class>
+            <class name="tests.LoginTests2">
+                <methods>
+                    <exclude name="loginTestWithValidCredentials"/>
+                    <exclude name="loginTestWithInValidCredentials"/>
+                </methods>
+            </class>
+            <class name="tests.NationalityTests">
+                <methods>
+                    <include name="addNewNationality"/>
+                    <include name="addExistingNationality"/>
+                    <include name="editNationality"/>
+                    <include name="deleteNationality"/>
+                    <include name="deleteMultipleNationality"/>
+                </methods>
+            </class>
+            <class name="tests.ParameterizationTest">
+                <methods>
+                    <exclude name="sampleTest"/>
+                </methods>
+            </class>
         </classes>
     </test>
 </suite>

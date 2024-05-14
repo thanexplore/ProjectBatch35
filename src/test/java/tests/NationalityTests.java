@@ -31,7 +31,7 @@ public class NationalityTests extends TestBase {
         HeaderPage headerPage = new HeaderPage(driver);
         headerPage.selectMenu(MenuOptions.NATIONALITIES);
         NationalityPage nationalityPage=new NationalityPage(driver);
-        Assert.assertTrue(nationalityPage.editNationality("AA"));
+        Assert.assertTrue(nationalityPage.editNationality("A","AA"));
         System.out.println("\n");
         System.out.println("nationality updated successfully");
         System.out.println("\n");
