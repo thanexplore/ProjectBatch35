@@ -17,41 +17,28 @@ public class CustomersTest extends TestBase {
         headerPage.selectMenu(MenuOptions.CUSTOMERS);
         CustomersPage customersPage = new CustomersPage(driver,null);
         customersPage.saveNewCustomer("Amazon");
-        customersPage.saveNewCustomer("TATA Elxsi");
         Assert.assertTrue(customersPage.match);
         System.out.println("\n");
-        System.out.println("Amazon and TATA Elxsi are added successfully");
+        System.out.println("Added successfully");
         System.out.println("\n");
 
     }
-    @Test(priority = 1)
-    public void alreadyExistingCustomer() {
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.login("Admin", "admin123", true, null);
-        HeaderPage headerPage = new HeaderPage(driver);
-        headerPage.selectMenu(MenuOptions.CUSTOMERS);
-        CustomersPage customersPage = new CustomersPage(driver,null);
-        customersPage.saveNewCustomer("TATA Elxsi");
-        Assert.assertTrue(customersPage.match);
-        System.out.println("\n");
-        System.out.println("TATA Elxsi is already existing");
-        System.out.println("\n");
-    }
 
-    @Test(priority = 2)
+    @Test
     public void deleteSingleCustomer() {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login("Admin", "admin123", true, null);
         HeaderPage headerPage = new HeaderPage(driver);
         headerPage.selectMenu(MenuOptions.CUSTOMERS);
         CustomersPage customersPage = new CustomersPage(driver,null);
-        customersPage.deleteCustomer();
+        customersPage.deleteCustomer("Amazon");
         Assert.assertEquals(customersPage.dlt,"Successfully Deleted", "Unsuccessful deletion");
+        Assert.assertFalse(customersPage.dltSingleMatch,"Not deleted");
         System.out.println("Amazon is deleted successfully");
         System.out.println("\n");
     }
 
-    @Test(priority = 3)
+    @Test
     public void editCustomerDetails() {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login("Admin", "admin123", true, null);
@@ -59,22 +46,25 @@ public class CustomersTest extends TestBase {
         headerPage.selectMenu(MenuOptions.CUSTOMERS);
         CustomersPage customersPage = new CustomersPage(driver,null);
         customersPage.saveNewCustomer("Amazon");
-        customersPage.editCustomer("Shopping site");
+        customersPage.editCustomer("Amazon","Shopping site");
         Assert.assertEquals(customersPage.updt,"Successfully Updated", "Updating unsuccessful");
+        Assert.assertTrue(customersPage.editMatch,"Not edited");
         System.out.println("Successfully updated");
         System.out.println("\n");
     }
 
-    @Test(priority = 4)
+    @Test
     public void deleteMultipleCustomerDetails() {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login("Admin", "admin123", true, null);
         HeaderPage headerPage = new HeaderPage(driver);
         headerPage.selectMenu(MenuOptions.CUSTOMERS);
+        String[] inputTexts ={"Amazon","Flipkart"};
         CustomersPage customersPage = new CustomersPage(driver,null);
-        customersPage.deleteMultipleCustomers();
+        customersPage.deleteMultipleCustomers(inputTexts);
         Assert.assertEquals(customersPage.dlt,"Successfully Deleted", "Unsuccessful deletion");
-        System.out.println("Selected customers are deleted successfully");
+        Assert.assertEquals(customersPage.matchCount,0,"Match found- Unsuccessful deletion");
+        System.out.println("Given customers are deleted successfully");
         System.out.println("\n");
     }
 }

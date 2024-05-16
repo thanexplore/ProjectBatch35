@@ -3,6 +3,7 @@ package library;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.*;
 
 public abstract class TestBase {
@@ -18,7 +19,7 @@ public abstract class TestBase {
 
     @BeforeMethod
     @Parameters("browser")
-    public void beforeMethod(@Optional("chrome") String browser){
+    public void beforeMethod(@Optional("firefox") String browser){
         this.browser = browser;
         System.out.println("Browser : " + browser);
         getDriver();
@@ -31,7 +32,7 @@ public abstract class TestBase {
                 //driver = new ChromeDriver();
                 break;
             case "firefox":
-                //driver = new FirefoxDriver();
+                driver = new FirefoxDriver();
                 break;
             case "safari":
                 //driver = new SafariDriver();
