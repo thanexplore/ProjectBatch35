@@ -21,9 +21,9 @@ public class customerPage extends PageBase {
     private String xpathYesDeleteButton = "//div[@class=\"orangehrm-modal-footer\"]//button[2]";
     private String xpathSuccessMessage = "//div[@class=\"oxd-toast oxd-toast--success oxd-toast-container--toast\"]";
     @FindBy(xpath = "//i[@class=\"oxd-icon bi-trash\"]")
-    List delete;
+    List<WebElement> delete;
     @FindBy(xpath = "//div[@class=\"oxd-table-body\"] //div[@class=\"oxd-table-cell oxd-padding-cell\"][2]")
-    List listOfRecordNames;
+    List<WebElement> listOfRecordNames;
 
     public customerPage(WebDriver driver, Boolean match) {
         super(driver);
@@ -35,17 +35,33 @@ public class customerPage extends PageBase {
         sleep(3000);
         isElementVisible(By.xpath("//i[@class=\"oxd-icon bi-pencil-fill\"]"));
         for (int i = 0; i < listOfRecordNames.size(); i++) {
-            WebElement cell=  listOfRecordNames.get(i);
-
             if (listOfRecordNames.get(i).getText().equalsIgnoreCase(name)) {
                 delete.get(i).click();
             }
         }
 
-    click(By.xpath(xpathYesDeleteButton));
-    return
-    isElementVisible(By.xpath(xpathSuccessMessage));
+        click(By.xpath(xpathYesDeleteButton));
+        return
+                isElementVisible(By.xpath(xpathSuccessMessage));
 
     }
+}
 
-
+/* List<WebElement> table_RowElement = driver.findElements(By.xpath(tableRow));
+        try {
+            for (WebElement row : table_RowElement) {
+                List<WebElement> table_ColElement = row.findElements(By.xpath(tableColumn));
+                for (int i = 0; i < table_ColElement.size(); i++) {
+                    WebElement cell = table_ColElement.get(i);
+                    txtCustomer = cell.getText();
+                    if (txtCustomer.equalsIgnoreCase(dltSingleCustomerName)) {
+                        WebElement trashButtonCell = table_ColElement.get(i + 2);
+                        WebElement trashButton = trashButtonCell.findElement(By.xpath(dltSingleCustomer));
+                        trashButton.click();
+                        sleep(2000);
+                        click(By.xpath(yesDelete));
+                        dlt = getText(By.xpath(successfullyDltd));
+                        sleep(2000);
+                        break;
+                    }
+                }*/
