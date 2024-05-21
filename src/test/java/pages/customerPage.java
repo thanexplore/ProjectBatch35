@@ -25,7 +25,7 @@ public class customerPage extends PageBase {
     @FindBy(xpath = "//div[@class=\"oxd-table-body\"] //div[@class=\"oxd-table-cell oxd-padding-cell\"][2]")
     List<WebElement> listOfRecordNames;
 
-    public customerPage(WebDriver driver, Boolean match) {
+    public customerPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         PageFactory.initElements(driver, this);
