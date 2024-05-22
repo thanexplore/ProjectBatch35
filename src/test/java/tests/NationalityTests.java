@@ -18,9 +18,7 @@ public class NationalityTests extends TestBase {
         NationalityPage nationalityPage=new NationalityPage(driver);
         Boolean match=nationalityPage.saveNewNationality("A");
         Assert.assertTrue(match);
-        System.out.println("\n");
-        System.out.println("nationalityName is added successfully");
-        System.out.println("\n");
+        System.out.println("\nnationalityName is added successfully\n");
 
     }
 
@@ -32,9 +30,7 @@ public class NationalityTests extends TestBase {
         headerPage.selectMenu(MenuOptions.NATIONALITIES);
         NationalityPage nationalityPage=new NationalityPage(driver);
         Assert.assertTrue(nationalityPage.editNationality("A","AA"));
-        System.out.println("\n");
-        System.out.println("nationality updated successfully");
-        System.out.println("\n");
+        System.out.println("\nnationality updated successfully\n");
 
     }
 
@@ -47,9 +43,7 @@ public class NationalityTests extends TestBase {
         NationalityPage nationalityPage=new NationalityPage(driver);
         Boolean match=nationalityPage.deleteNationality("AA");
         Assert.assertFalse(match);
-        System.out.println("\n");
-        System.out.println("nationalityName deleted successfully");
-        System.out.println("\n");
+        System.out.println("\nnationalityName deleted successfully\n");
     }
 
     @Test
@@ -60,9 +54,7 @@ public class NationalityTests extends TestBase {
         headerPage.selectMenu(MenuOptions.NATIONALITIES);
         NationalityPage nationalityPage=new NationalityPage(driver);
         Assert.assertTrue(nationalityPage.addExistingNationality("A"));
-        System.out.println("\n");
-        System.out.println("Nationality already exists");
-        System.out.println("\n");
+        System.out.println("\nNationality already exists\n");
 
     }
 
@@ -75,9 +67,7 @@ public class NationalityTests extends TestBase {
         NationalityPage nationalityPage=new NationalityPage(driver);
         Boolean match=nationalityPage.deleteMultipleNationality("A","AA");
         Assert.assertTrue(match);
-        System.out.println("\n");
-        System.out.println("nationalityNames deleted successfully");
-        System.out.println("\n");
+        System.out.println("\nnationalityNames deleted successfully\n");
     }
 
 }

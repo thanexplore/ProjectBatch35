@@ -120,6 +120,56 @@ public abstract class PageBase {
         }
     }
 
+
+    protected void clearAndSetText(By by, String text, int ... retries) {
+        if((text != null && text.length() != 0)) {
+            if(retries.length==0){
+                retries = new int[1];
+                retries[0] = DEF_MAX_TRIALS;
+            }
+
+            if(retries[0]<=0) {
+                log.debug("clear and setText({},{}) failed. Terminating after maximum number of attempts",by, text);
+                Assert.fail("clear and setText("+by+","+text+") failed. Terminating after maximum number of attempts" );
+                return;
+            }
+
+            try {
+                WebElement we = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIME))
+                        .until(ExpectedConditions
+                                .presenceOfElementLocated(by));
+
+
+                while (!we.getAttribute("value").equals("")) {
+                    we.clear();
+                    we.sendKeys(Keys.BACK_SPACE);
+                }
+                we.sendKeys(text);
+                String value = driver.findElement(by).getAttribute("value");
+                if(!value.equals(text)){
+                    log.debug("clear and setText({},{}) failed. Attempting again...",by, text);
+                    setText(by,text,retries[0]-1);
+                }else{
+                    log.debug("clear and setText({},{}) done sucessfully",by, text);
+                }
+
+            } catch (StaleElementReferenceException exception) {
+                log.debug("clear and setText({},{}) failed-StaleElementReferenceException. Attempting again...",by, text);
+                sleep(REATTEMPT_DELAY);
+                setText(by,text,retries[0]-1);
+            } catch (ElementNotInteractableException exception) {
+                log.debug("clear and setText({},{}) failed-ElementNotInteractableException. Attempting again...",by, text);
+                sleep(REATTEMPT_DELAY);
+                setText(by,text,retries[0]-1);
+            }catch (WebDriverException exception){
+                log.debug("clear and setText({},{})failed : WebDriverException caught",by,text);
+                sleep(REATTEMPT_DELAY);
+                setText(by,text,retries[0]-1);
+            }
+        }
+    }
+
+
     protected void fileUpload(By by, String text, int ... retries) {
         if((text != null && text.length() != 0)) {
             if(retries.length==0){
