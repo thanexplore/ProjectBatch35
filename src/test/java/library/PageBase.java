@@ -119,6 +119,23 @@ public abstract class PageBase {
             }
         }
     }
+    protected Void setText1(By by,String text){
+        WebElement we = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIME))
+                .until(ExpectedConditions
+                        .presenceOfElementLocated(by));
+        we.clear();
+        we.sendKeys(text);
+        String value = driver.findElement(by).getAttribute("value");
+        if(!value.equals(text)){
+            log.debug("setText({},{}) failed. Attempting again...",by, text);
+            setText(by,text);
+        }else{
+            log.debug("setText({},{}) done sucessfully",by, text);
+
+        }
+        return null;
+
+    }
 
     protected void fileUpload(By by, String text, int ... retries) {
         if((text != null && text.length() != 0)) {

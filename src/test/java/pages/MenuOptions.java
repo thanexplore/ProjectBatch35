@@ -6,7 +6,7 @@ public class MenuOptions {
     public static final String USERS = "Admin|User Management|Users";
     public static final String JOB_TITLES = "Admin|Job |Job Titles";
     public static final String PAY_GRADES = "Admin|Job|Pay Grades";
-    public static final String EMPLOYMENT_STATUS = "Admin|Job|Employment Status";
+    public static final String EMPLOYMENT_STATUS = "Admin|Job |Employment Status";
     public static final String JOB_CATEGORIES = "Admin|Job|Job Categories";
     public static final String WORK_SHIFTS = "Admin|Job|Work Shifts";
     public static final String CONFIGURATION = "PIM|Configuration";

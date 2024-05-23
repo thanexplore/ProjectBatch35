@@ -15,6 +15,7 @@ public class EducationTests extends TestBase {
 public void addNewEducation() {
     LoginPage loginPage = new LoginPage(driver);
     loginPage.login("Admin", "admin123", true, null);
+
     HeaderPage headerPage = new HeaderPage(driver);
     headerPage.selectMenu(MenuOptions.EDUCATION);
     EducationPage educationPage = new EducationPage(driver);

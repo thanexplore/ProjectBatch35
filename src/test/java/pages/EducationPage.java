@@ -19,9 +19,10 @@ public class EducationPage extends PageBase {
     private final String lblAlreadyExistsMessage = "//div[@class='oxd-form-row'] /div";
     private final String getIdEduCancelBtn= "//div[@class='oxd-form-actions'] /button[1]";
     private final String tblEducation = ".oxd-table-body";
-    private final String educations = "//div[@class='oxd-table-body'] /div[@class='oxd-table-card']";
+    private final String educations = "//div[@class='oxd-table-body oxd-card-table-body']//div[@class='oxd-table-card --mobile'][1]";
     @FindBy(xpath = educations)
     private List<WebElement> listEducations;
+
 
     public EducationPage(WebDriver driver) {
         super(driver);

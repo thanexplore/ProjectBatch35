@@ -38,7 +38,7 @@ public class HeaderPage extends PageBase {
             By byMenu = By.xpath(menuItem.replace("XXX",item));
             Rectangle rectangle = getRect(byMenu);
             log.debug("Menu item coordinates- X1:{}, Y1:{}, X2 :{}, Y2 :{}", rectangle.getX(),rectangle.getY(),
-                    rectangle.getX()+rectangle.getWidth(), rectangle.getY()+rectangle.getHeight());
+                rectangle.getX()+rectangle.getWidth(), rectangle.getY()+rectangle.getHeight());
 
             mouseHover(byMenu);
             sleep(MENU_SELECTION_DELAY);

@@ -6,7 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.*;
 
 public abstract class TestBase {
-    protected WebDriver driver;
+    protected static WebDriver driver;
     //protected  ChromeDriver driver;
     protected String browser;
     protected final String BASE_URL = "https://opensource-demo.orangehrmlive.com";
