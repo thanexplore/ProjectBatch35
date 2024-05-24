@@ -23,6 +23,7 @@ public class customerPage extends PageBase {
     private String xpathSuccessMessage = "//div[@class=\"oxd-toast oxd-toast--success oxd-toast-container--toast\"]";
     private final String descripAddCust = "div[class='oxd-form-row'] textarea[class*='oxd-textarea']";
     private final String deleteSlctdBtn = "//button[text()=' Delete Selected ']";
+    public Boolean dltSingleMatch;
 
     public Boolean editSuccess;
     @FindBy(xpath = "//i[@class=\"oxd-icon bi-trash\"]")
@@ -69,18 +70,20 @@ public class customerPage extends PageBase {
         return match;
     }
 
-    public boolean deleteCustomer(String name) {
+    public boolean deleteCustomer(String dltSingleCustomerName) {
         sleep(3000);
         isElementVisible(By.xpath("//i[@class=\"oxd-icon bi-pencil-fill\"]"));
         for (int i = 0; i < listOfRecordNames.size(); i++) {
-            if (listOfRecordNames.get(i).getText().equalsIgnoreCase(name)) {
+            if (listOfRecordNames.get(i).getText().equalsIgnoreCase(dltSingleCustomerName)) {
                 delete.get(i).click();
             }
         }
 
         click(By.xpath(xpathYesDeleteButton));
+        isElementVisible(By.xpath(xpathSuccessMessage));
+        isElementVisible(By.cssSelector(tableCustomers));
         return
-                isElementVisible(By.xpath(xpathSuccessMessage));
+        dltSingleMatch = listCustomers.stream().map(s -> s.getText()).anyMatch(s -> s.equalsIgnoreCase(dltSingleCustomerName));
 
     }
 
@@ -117,56 +120,5 @@ public class customerPage extends PageBase {
         click(By.xpath(xpathYesDeleteButton));
         return
                 isElementVisible(By.xpath(xpathSuccessMessage));
-
-        /*List<WebElement> table_RowElement = driver.findElements(By.xpath(tableRow));
-        try {
-            for (String inputText : inputTexts) {
-                boolean textFound = false;
-
-                for (WebElement row : table_RowElement) {
-                    List<WebElement> table_ColElement = row.findElements(By.xpath(tableColumn));
-                    for (int i = 0; i < table_ColElement.size(); i++) {
-                        WebElement cell = table_ColElement.get(i);
-                        txtCustomer = cell.getText();
-                        if (txtCustomer.equalsIgnoreCase(inputText)) {
-                            WebElement checkboxCell = table_ColElement.get(i - 1);
-                            WebElement checkBox = checkboxCell.findElement(By.xpath(slctMultiCust));
-                            checkBox.click();
-                            textFound = true;
-                            break;
-                        }
-                    }
-                    if (textFound) {
-                        break;
-                    }
-                }
-            }
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-        sleep(2000);
-        click(By.xpath(deleteSlctdBtn));
-        sleep(2000);
-        click(By.xpath(yesDelete));
-        dlt = getText(By.xpath(successfullyDltd));
-        sleep(2000);
-        isElementVisible(By.cssSelector(tableCustomers));
-        for (String splitted : inputTexts) {
-            Boolean dltMatch =false;
-            dltMatch = listCustomers.stream().map(s -> s.getText()).anyMatch(s -> s.equalsIgnoreCase(splitted));
-            if(dltMatch){
-                matchCount++;
-            }
-        }
-        System.out.println("Customer List:\n");
-        for (WebElement Customer : listCustomers) {
-            String txtCustomer = Customer.getText();
-            System.out.println(txtCustomer);
-            System.out.println("\n");
-        }
-    }*/
-
     }
 }
-
-

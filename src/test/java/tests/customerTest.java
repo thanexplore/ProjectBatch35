@@ -26,7 +26,7 @@ public class customerTest extends TestBase {
         HeaderPage headerPage = new HeaderPage(driver);
         headerPage.selectMenu(MenuOptions.CUSTOMERS);
         customerPage customersPage = new customerPage(driver);
-        Assert.assertTrue(customersPage.deleteCustomer("Amazon"),"Not deleted");
+        Assert.assertFalse(customersPage.deleteCustomer("Amazon"),"Not deleted");
     }
     @Test
     public void editCustomerDetails() {
