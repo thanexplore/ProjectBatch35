@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test verbose="2" preserve-order="true" name="C:\Users\alish\OneDrive\Desktop\pomexample/Projectpombatch35">
+        <classes>
+            <class name="tests.customerTest">
+                <methods>
+                    <include name="saveNewCustomer"/>
+                    <include name="deleteCustomer"/>
+                    <include name="editCustomer"/>
+                    <include name="deleteMultipleCustomers"/>
+
+
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
