@@ -6,8 +6,6 @@
             <class name="tests.EducationTests">
                 <methods>
                     <include name="addNewEducation"/>
-
-
                 </methods>
             </class>
         </classes>
