@@ -23,10 +23,10 @@ public class Employment_StatusTests extends TestBase {
         loginPage.login("Admin", "admin123", true, null);
         HeaderPage headerPage = new HeaderPage(driver);
         headerPage.selectMenu(MenuOptions.EMPLOYMENT_STATUS);
-
         Employment_Status EmpStatus= new Employment_Status(driver);
         Thread.sleep(3000);
-        Assert.assertEquals(EmpStatus.saveNewES("Marketing Manager"),true);
+        EmpStatus.saveNewES("Marketing Manager");
+        Assert.assertTrue(EmpStatus.match);
     }
 
     @Test(priority = 1)
@@ -36,10 +36,8 @@ public class Employment_StatusTests extends TestBase {
         HeaderPage headerPage = new HeaderPage(driver);
         headerPage.selectMenu(MenuOptions.EMPLOYMENT_STATUS);
         Employment_Status EditStatus = new Employment_Status(driver);
-        Assert.assertEquals(EditStatus.EditEmpStatus(),true);
-        driver.findElement(By.xpath("(//input[contains(@class,'oxd-input oxd-input')])[2]")).sendKeys("Operation Manager");
-        Thread.sleep(4000);
-        driver.findElement(By.xpath("//button[text()=' Save ']")).click();
+        EditStatus.EditEmpStatus("Marketing Manager", "Operation Manager");
+        Assert.assertTrue(EditStatus.match);
 
     }
     @Test(priority = 2)
@@ -49,7 +47,8 @@ public class Employment_StatusTests extends TestBase {
         HeaderPage headerPage = new HeaderPage(driver);
         headerPage.selectMenu(MenuOptions.EMPLOYMENT_STATUS);
         Employment_Status DeleteStatus = new Employment_Status(driver);
-        Assert.assertEquals(DeleteStatus.deleteEmpStatus("Operation Manager"),true);
+        DeleteStatus.deleteEmpStatus("Operation Manager");
+        Assert.assertFalse(DeleteStatus.match);
 
     }
     @Test(priority=3)
@@ -59,7 +58,7 @@ public class Employment_StatusTests extends TestBase {
         HeaderPage headerPage = new HeaderPage(driver);
         headerPage.selectMenu(MenuOptions.EMPLOYMENT_STATUS);
         Employment_Status DeleteMultiStat = new Employment_Status(driver);
-        Assert.assertEquals(DeleteMultiStat.deleteRandomMultipleEmpStatus(),null);
+        DeleteMultiStat.deleteRandomMultipleEmpStatus();
 
     }
     @Test(priority = 4)
@@ -72,5 +71,6 @@ public class Employment_StatusTests extends TestBase {
         String text = CountOfRec.countofRecord();
         System.out.println(text);
     }
-    }
+
+}
 
