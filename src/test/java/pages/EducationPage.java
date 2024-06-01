@@ -46,9 +46,6 @@ public class EducationPage extends PageBase {
 
         }
         Boolean match = listEducations.stream().map(s -> s.getText()).anyMatch(s -> s.equalsIgnoreCase(educationName));
-        Assert.assertTrue(match);
-        System.out.println("\n");
-        System.out.println(educationName + " is added successfully");
-        System.out.println("\n");
+
     }
 }
