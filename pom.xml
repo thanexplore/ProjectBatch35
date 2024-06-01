@@ -52,7 +52,10 @@
                 <configuration>
                     <suiteXmlFiles>
                         <suiteXmlFile>testng.xml</suiteXmlFile>
+<arunEmpStatusB35
                         <suiteXmlFile>testngEmpStatus.xml</suiteXmlFile>
+                        <suiteXmlFile>testngCustomers.xml</suiteXmlFile>
+> main
 
                     </suiteXmlFiles>
                 </configuration>
