@@ -23,12 +23,7 @@ public class Employment_Status extends PageBase {
     private String ESCancelData = "//button[text()=' Cancel ']";
     private String ESAlredyExisting = "//div[@class='oxd-form-row']/div";
     private String ESTable = "//div[@class='oxd-table-body']";
-    private String ESEdit = "(//button[@class='oxd-icon-button oxd-table-cell-action-space'])[2]";
-    //private String ESEdit= "(//div[contains(text(),'Marketing')]//following::div[1]//child::button[2]";
     private String ESEditStatus1 = "(//input[contains(@class,'oxd-input oxd-input')])[2]";
-    //private String ESEditStatus2 = "//input[@class='oxd-input oxd-input--active oxd-input--error']";
-    private String ESDelete = "(//button[@class='oxd-icon-button oxd-table-cell-action-space'])[1]";
-    //private String ESDelete = "(//div[contains(text(),'Marketing')]//following::div[1]//child::button[1]";
     private String ESDeleteYesDelete = "//button[text()=' Yes, Delete ']";
     private String ESDeleteNoCancel = "//button[text()=' No, Cancel ']";
     private String ESMultiDelete1 = "(//span[@class='oxd-checkbox-input oxd-checkbox-input--active --label-right oxd-checkbox-input'])[2]";
