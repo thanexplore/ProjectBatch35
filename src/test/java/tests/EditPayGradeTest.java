@@ -2,6 +2,7 @@ package tests;
 
 import library.TestBase;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HeaderPage;
 import pages.LoginPage;
@@ -16,6 +17,8 @@ public class EditPayGradeTest extends TestBase {
         PayGradePage payGradePage = new PayGradePage(driver);
         payGradePage.payGradePageNav();
         payGradePage.editPayGrade();
+        payGradePage.verifyEdit();
+
     }
 
 }

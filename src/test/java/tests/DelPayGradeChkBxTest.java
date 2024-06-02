@@ -6,15 +6,13 @@ import org.testng.annotations.Test;
 import pages.LoginPage;
 import pages.PayGradePage;
 
-public class DelPayGradeTest extends TestBase {
+public class DelPayGradeChkBxTest extends TestBase {
     @Test
-    public void delPayGradeTest(){
+    public void delPayGradeChkBXTest(){
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login("Admin","admin123",true,null);
         PayGradePage payGradePage = new PayGradePage(driver);
         payGradePage.payGradePageNav();
-        Assert.assertFalse(payGradePage.delPayGrade("Grade 6"));
-
+        Assert.assertFalse(payGradePage.delPayGradeChkBx("Grade 6"));
     }
-
 }

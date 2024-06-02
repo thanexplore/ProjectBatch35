@@ -27,6 +27,7 @@ public class PayGradePage extends PageBase {
     public String jobBtn   = "(//span[contains(@class,'oxd-topbar-body-nav-tab-item')])[2]";
     public String payGradeBtn = "//a[text()='Pay Grades']";
 
+    public String delConMsg       = "//div[@class='oxd-toast-container oxd-toast-container--bottom']";
     public String payGradeAddBtn  = "//button[@class='oxd-button oxd-button--medium oxd-button--secondary']";
     public String payGradeName    = "div[class='oxd-form-row'] input[class*='oxd-input']";
     public String payGradeSaveBtn = "//button[@type='submit']";
@@ -38,8 +39,11 @@ public class PayGradePage extends PageBase {
     public String payGradeCancel  = "//div[@class='oxd-form-actions'] /button[1]";
     public String editSaveBtn     = "button[class='oxd-button oxd-button--medium oxd-button--secondary orangehrm-left-space']";
     public String lblExistsMsg    = "//div[@class='oxd-form-row'] /div";
+    public String payGradeChkBx   = "(//span[@class='oxd-checkbox-input oxd-checkbox-input--active --label-right oxd-checkbox-input'])[2]";
     private final String payGradeLst     = "//div[@class='oxd-table-body'] /div[@class='oxd-table-card']";
-     @FindBy(xpath = payGradeLst)
+    public String editSmplXpath = "//div[contains(text(),'-sample')]";
+    public boolean payGradeDeleted;
+    @FindBy(xpath = payGradeLst)
      public List<WebElement> listPayGrades;
 
     public  void payGradePageNav(){
@@ -49,13 +53,11 @@ public class PayGradePage extends PageBase {
         click(By.xpath(payGradeBtn));
     }
 
-    public  void addNewPayGrade(String newPayGradeName){
+    public  boolean addNewPayGrade(String newPayGradeName){
 
         click(By.xpath(payGradeAddBtn));
         setText(By.cssSelector(payGradeName),newPayGradeName);
         if (getText(By.xpath(lblExistsMsg)).contains("Already exists")){
-            boolean is_Visible = getText(By.xpath(lblExistsMsg)).contains("Already exists");
-            Assert.assertTrue(is_Visible);
             click(By.xpath(payGradeCancel));
         } else {
             click(By.xpath(payGradeSaveBtn));
@@ -70,7 +72,7 @@ public class PayGradePage extends PageBase {
 
         }
         Boolean match = listPayGrades.stream().map(s -> s.getText()).anyMatch(s -> s.equalsIgnoreCase(newPayGradeName));
-        Assert.assertTrue(match);
+        return match;
 
 
     }
@@ -82,18 +84,40 @@ public class PayGradePage extends PageBase {
         textField.click();
         textField.sendKeys("-sample");
         click(By.cssSelector(editSaveBtn));
-        sleep(1000);
+        sleep(2000);
         click(By.xpath(payGradeCancel));
         isElementVisible(By.cssSelector(payGradeTable));
 
 
     }
+    public void  verifyEdit(){
+        boolean is_visible = isElementPresent(By.xpath(editSmplXpath));
+        Assert.assertTrue(is_visible);
 
-    public void delPayGrade(){
+    }
+
+    public boolean delPayGrade(String payGradeDel){
         click(By.xpath(payGradeDelBtn));
         click(By.xpath(confDelBtn));
         sleep(1000);
         isElementVisible(By.cssSelector(payGradeTable));
+
+        return
+      payGradeDeleted = listPayGrades.stream().map(s -> s.getText()).anyMatch(s -> s.equalsIgnoreCase(payGradeDel));
+
+    }
+
+    public boolean delPayGradeChkBx( String delUsingChkBox){
+        click(By.xpath(payGradeChkBx));
+        click(By.xpath(payGradeDelBtn));
+        click(By.xpath(confDelBtn));
+        sleep(1000);
+        isElementVisible(By.cssSelector(payGradeTable));
+
+        return
+                payGradeDeleted = listPayGrades.stream().map(s -> s.getText()).anyMatch(s -> s.equalsIgnoreCase(delUsingChkBox));
+
+
 
 
     }
