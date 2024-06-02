@@ -43,12 +43,7 @@ public class Employment_Status extends PageBase {
     private List<WebElement> editbutton;
     @FindBy(xpath = DeleteButton)
     private List<WebElement> deletebutton;
-   /* @FindBy(xpath = Rows)
-    private List<WebElement> ESRows;
-    @FindBy(xpath = Columns)
-    private List<WebElement> ESColumns;
 
-    */
    public boolean match;
 
     public Employment_Status(WebDriver driver) {
@@ -130,7 +125,7 @@ public class Employment_Status extends PageBase {
     }
 
 
-    public String countofRecord() {
+    public String countOfRecord() {
         sleep(3000);
         return getText(By.xpath(ESRecord));
 

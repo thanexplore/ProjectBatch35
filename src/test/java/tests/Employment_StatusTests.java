@@ -68,7 +68,7 @@ public class Employment_StatusTests extends TestBase {
         HeaderPage headerPage = new HeaderPage(driver);
         headerPage.selectMenu(MenuOptions.EMPLOYMENT_STATUS);
         Employment_Status CountOfRec = new Employment_Status(driver);
-        String text = CountOfRec.countofRecord();
+        String text = CountOfRec.countOfRecord();
         System.out.println(text);
     }
 
