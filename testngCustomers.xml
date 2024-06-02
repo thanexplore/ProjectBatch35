@@ -5,12 +5,10 @@
         <classes>
             <class name="tests.customerTest">
                 <methods>
-                    <include name="saveNewCustomer"/>
-                    <include name="deleteCustomer"/>
-                    <include name="editCustomer"/>
-                    <include name="deleteMultipleCustomers"/>
-
-
+                    <include name="addNewCustomer"/>
+                    <include name="editCustomerDetails"/>
+                    <include name="deleteSingleCustomer"/>
+                    <include name="deleteMultipleCustomerDetails"/>
                 </methods>
             </class>
         </classes>
